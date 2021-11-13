@@ -63,7 +63,7 @@ FROM [LevelOne] FOR SYSTEM_TIME AS OF '2010-01-01T00:00:00.0000000' AS [l]
 OUTER APPLY (
     SELECT [l0].[Id], [l0].[Date], [l0].[Level1_Optional_Id], [l0].[Level1_Required_Id], [l0].[Name], [l0].[OneToMany_Optional_Inverse2Id], [l0].[OneToMany_Optional_Self_Inverse2Id], [l0].[OneToMany_Required_Inverse2Id], [l0].[OneToMany_Required_Self_Inverse2Id], [l0].[OneToOne_Optional_PK_Inverse2Id], [l0].[OneToOne_Optional_Self2Id], [l0].[PeriodEnd], [l0].[PeriodStart]
     FROM [LevelTwo] FOR SYSTEM_TIME AS OF '2010-01-01T00:00:00.0000000' AS [l0]
-    WHERE ([l0].[Level1_Required_Id] = ([l].[Id] * 2)) OR (CAST(LEN([l0].[Name]) AS int) = [l0].[Id])
+    WHERE [l0].[Level1_Required_Id] = ([l].[Id] * 2) OR CAST(LEN([l0].[Name]) AS int) = [l0].[Id]
 ) AS [t]
 LEFT JOIN [LevelTwo] FOR SYSTEM_TIME AS OF '2010-01-01T00:00:00.0000000' AS [l1] ON [l].[Id] = [l1].[OneToMany_Optional_Inverse2Id]
 ORDER BY [l].[Id], [t].[Id]");

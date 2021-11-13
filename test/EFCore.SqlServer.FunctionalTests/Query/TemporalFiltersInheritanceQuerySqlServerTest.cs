@@ -54,7 +54,7 @@ ORDER BY [a].[Species]");
             AssertSql(
                 @"SELECT [a].[Species], [a].[CountryId], [a].[Discriminator], [a].[Name], [a].[PeriodEnd], [a].[PeriodStart], [a].[EagleId], [a].[IsFlightless], [a].[Group], [a].[FoundOn]
 FROM [Animals] FOR SYSTEM_TIME AS OF '2010-01-01T00:00:00.0000000' AS [a]
-WHERE ([a].[CountryId] = 1) AND ([a].[Discriminator] = N'Kiwi')");
+WHERE [a].[CountryId] = 1 AND [a].[Discriminator] = N'Kiwi'");
         }
 
         public override async Task Can_use_is_kiwi_with_other_predicate(bool async)
@@ -64,19 +64,7 @@ WHERE ([a].[CountryId] = 1) AND ([a].[Discriminator] = N'Kiwi')");
             AssertSql(
                 @"SELECT [a].[Species], [a].[CountryId], [a].[Discriminator], [a].[Name], [a].[PeriodEnd], [a].[PeriodStart], [a].[EagleId], [a].[IsFlightless], [a].[Group], [a].[FoundOn]
 FROM [Animals] FOR SYSTEM_TIME AS OF '2010-01-01T00:00:00.0000000' AS [a]
-WHERE ([a].[CountryId] = 1) AND (([a].[Discriminator] = N'Kiwi') AND ([a].[CountryId] = 1))");        }
-
-        public override async Task Can_use_is_kiwi_in_projection(bool async)
-        {
-            await base.Can_use_is_kiwi_in_projection(async);
-
-            AssertSql(
-                @"SELECT CASE
-    WHEN [a].[Discriminator] = N'Kiwi' THEN CAST(1 AS bit)
-    ELSE CAST(0 AS bit)
-END
-FROM [Animals] FOR SYSTEM_TIME AS OF '2010-01-01T00:00:00.0000000' AS [a]
-WHERE [a].[CountryId] = 1");
+WHERE [a].[CountryId] = 1 AND [a].[Discriminator] = N'Kiwi' AND [a].[CountryId] = 1");
         }
 
         public override async Task Can_use_of_type_bird(bool async)
@@ -97,7 +85,7 @@ ORDER BY [a].[Species]");
             AssertSql(
                 @"SELECT [a].[Species], [a].[CountryId], [a].[Discriminator], [a].[Name], [a].[PeriodEnd], [a].[PeriodStart], [a].[EagleId], [a].[IsFlightless], [a].[Group], [a].[FoundOn]
 FROM [Animals] FOR SYSTEM_TIME AS OF '2010-01-01T00:00:00.0000000' AS [a]
-WHERE ([a].[CountryId] = 1) AND ([a].[CountryId] = 1)
+WHERE [a].[CountryId] = 1 AND [a].[CountryId] = 1
 ORDER BY [a].[Species]");
         }
 
@@ -129,7 +117,7 @@ ORDER BY [a].[Species]");
             AssertSql(
                 @"SELECT [a].[Species], [a].[CountryId], [a].[Discriminator], [a].[Name], [a].[PeriodEnd], [a].[PeriodStart], [a].[EagleId], [a].[IsFlightless], [a].[FoundOn]
 FROM [Animals] FOR SYSTEM_TIME AS OF '2010-01-01T00:00:00.0000000' AS [a]
-WHERE ([a].[CountryId] = 1) AND ([a].[Discriminator] = N'Kiwi')");
+WHERE [a].[CountryId] = 1 AND [a].[Discriminator] = N'Kiwi'");
         }
 
         public override async Task Can_use_derived_set(bool async)
@@ -139,7 +127,7 @@ WHERE ([a].[CountryId] = 1) AND ([a].[Discriminator] = N'Kiwi')");
             AssertSql(
                 @"SELECT [a].[Species], [a].[CountryId], [a].[Discriminator], [a].[Name], [a].[PeriodEnd], [a].[PeriodStart], [a].[EagleId], [a].[IsFlightless], [a].[Group]
 FROM [Animals] FOR SYSTEM_TIME AS OF '2010-01-01T00:00:00.0000000' AS [a]
-WHERE ([a].[Discriminator] = N'Eagle') AND ([a].[CountryId] = 1)");
+WHERE [a].[Discriminator] = N'Eagle' AND [a].[CountryId] = 1");
         }
 
         public override Task Can_use_IgnoreQueryFilters_and_GetDatabaseValues(bool async)
